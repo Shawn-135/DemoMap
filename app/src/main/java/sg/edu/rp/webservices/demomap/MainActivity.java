@@ -54,7 +54,19 @@ public class MainActivity extends AppCompatActivity {
                         .position(poi_RP)
                         .title("Republic Polytechnic")
                         .snippet("C347 Android Programming II")
-                        .icon(BitmapDescriptorFactory.fromResource((R.drawable.ic_launcher_background))));
+                        .icon(BitmapDescriptorFactory.fromResource((R.drawable.ic_launcher))));
+
+                int permissionCheck = ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION);
+
+                if (permissionCheck == PermissionChecker.PERMISSION_GRANTED) {
+                    map.setMyLocationEnabled(true);
+                }
+                else {
+                    Log.e("GMap - Permission", "GPS access has not been granted");
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+                }
             }
         });
 
@@ -88,18 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        int permissionCheck = ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-
-        if (permissionCheck == PermissionChecker.PERMISSION_GRANTED) {
-            map.setMyLocationEnabled(true);
-        }
-        else {
-            Log.e("GMap - Permission", "GPS access has not been granted");
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
-        }
 
     }
 }
